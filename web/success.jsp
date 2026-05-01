@@ -50,6 +50,10 @@ String role = (String) session.getAttribute("role");
                 </a>
             <% } %>
 
+            <a href="<%= request.getContextPath() %>/DownloadReport">
+                <button type="button" style="margin-bottom: 15px;">Download Report</button>
+            </a>
+
             <br>
             <a href="<%= request.getContextPath() %>/LogoutServlet" style="font-size: 0.9em; color: #a0a0a0;">Logout</a>
         </div>
