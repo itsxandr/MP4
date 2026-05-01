@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!-- ============================= -->
+    <!-- Global Context Parameters -->
+    <!-- ============================= -->
+
+    <!-- Header & Footer -->
+    <context-param>
+        <param-name>header</param-name>
+        <param-value>KLINE - MOGRO - MP3</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>footer</param-name>
+        <param-value>KLINE - MOGRO - MP3</param-value>
+    </context-param>
+
+    <!-- Derby Database Configuration -->
+    <context-param>
+        <param-name>dbDriver</param-name>
+        <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>dbURL</param-name>
+        <param-value>jdbc:derby://localhost:1527/LoginDB;create=true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>dbUser</param-name>
+        <param-value>app</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>dbPass</param-name>
+        <param-value>app</param-value>
+    </context-param>
+    
+    <!-- NEW MAPPINGS for MP3 -->
+    <context-param>
+        <param-name>captchaLength</param-name>
+        <param-value>6</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>encryptionKey</param-name>
+        <param-value>MySuperSecretKey</param-value> 
+    </context-param>
+
+    <context-param>
+        <param-name>cipherAlgorithm</param-name>
+        <param-value>AES</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <servlet-class>servlet.CaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <url-pattern>/CaptchaServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ============================= -->
+    <!-- Login Servlet -->
+    <!-- ============================= -->
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>servlet.LoginServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ============================= -->
+    <!-- Logout Servlet -->
+    <!-- ============================= -->
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>servlet.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- ============================= -->
+    <!-- Session Configuration -->
+    <!-- ============================= -->
+
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
+
+
+    <!-- ============================= -->
+    <!-- Welcome File -->
+    <!-- ============================= -->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+
+    <!-- ============================= -->
+    <!-- Error Page Declarations -->
+    <!-- ============================= -->
+
+    <!-- 404 Error -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorpages/error_4.jsp</location>
+    </error-page>
+
+    <!-- Authentication Exception -->
+    <error-page>
+        <exception-type>exceptions.AuthenticationException</exception-type>
+        <location>/errorpages/error_3.jsp</location>
+    </error-page>
+
+    <!-- Null Value Exception -->
+    <error-page>
+        <exception-type>exceptions.NullValueException</exception-type>
+        <location>/errorpages/noLoginCredentials.jsp</location>
+    </error-page>
+
+   <error-page>
+        <exception-type>java.sql.SQLException</exception-type>
+        <location>/errorpages/error_generic.jsp</location>
+    </error-page>
+    
+    <error-page>
+        <exception-type>java.io.IOException</exception-type>
+        <location>/errorpages/error_generic.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>javax.servlet.ServletException</exception-type>
+        <location>/errorpages/error_servlet.jsp</location>
+    </error-page>
+  
+
+</web-app>

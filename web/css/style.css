@@ -1,0 +1,156 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02 27, 26, 1:06:09 PM
+    Author     : georg
+*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+    color: #4a4a4a;
+    position: relative;
+    overflow-x: hidden;
+}
+
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    background-image: url('../images/blossom.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+   
+    filter: blur(10px); 
+    
+   
+    transform: scale(1.05); 
+    z-index: -1;
+}
+
+/* Solid Header and Footer Bars */
+header, footer {
+    background-color: #f7a8b8; 
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 1; 
+}
+
+header h2 {
+    margin: 0;
+    color: white;
+    font-weight: 600;
+}
+
+/* Main Content Area (Between Header and Footer) */
+main {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    z-index: 1;
+}
+
+/* Glassmorphism Card Containers */
+form, table, .error-container, .card-container {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(5px); 
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(220, 160, 175, 0.4);
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Wider card for tables so they don't get squished */
+table {
+    max-width: 800px;
+    border-collapse: collapse;
+}
+
+h2, h3 {
+    color: #d47fa6; 
+    margin-top: 0;
+}
+
+/* Inputs & Buttons */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #f0cadd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: #d47fa6;
+    box-shadow: 0 0 5px rgba(212, 127, 166, 0.3);
+}
+
+input[type="submit"], button {
+    background-color: #f7a8b8;
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #e08298;
+    transform: translateY(-2px);
+}
+
+a {
+    color: #d47fa6;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #b05c82;
+    text-decoration: underline;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0ecf0;
+}
+
+th {
+    background-color: #fcf0f4;
+    color: #d47fa6;
+}
