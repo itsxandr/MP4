@@ -185,53 +185,45 @@ public class ReportServlet extends HttpServlet {
 
     private static class FooterEvent extends PdfPageEventHelper {
 
-        private static final String OWNER_TEXT = "Owner: KLINE & MOGRO";
-        private static final float FOOTER_FONT_SIZE = 11f;
-
-        private PdfTemplate totalPagesTemplate;
-        private BaseFont footerFont;
+        private PdfTemplate totalPages;
+        private BaseFont baseFont;
 
         @Override
         public void onOpenDocument(PdfWriter writer, Document document) {
-            totalPagesTemplate = writer.getDirectContent().createTemplate(50, 12);
+            totalPages = writer.getDirectContent().createTemplate(30, 16);
             try {
-                footerFont = BaseFont.createFont(BaseFont.HELVETICA_OBLIQUE, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
+                baseFont = BaseFont.createFont(BaseFont.HELVETICA_OBLIQUE, BaseFont.WINANSI, BaseFont.NOT_EMBEDDED);
             } catch (Exception e) {
-                throw new RuntimeException("Unable to initialize footer font.", e);
+                throw new RuntimeException(e);
             }
         }
 
         @Override
         public void onEndPage(PdfWriter writer, Document document) {
             PdfContentByte canvas = writer.getDirectContent();
-            String pagePrefix = "Page " + writer.getPageNumber() + " of ";
+            String owner = "Owner: KLINE & MOGRO";
+            String pageText = "Page " + writer.getPageNumber() + " of ";
 
-            float footerY = document.bottom() - 20f;
+            float y = document.bottom() - 20;
             float leftX = document.left();
+            float rightTextWidth = baseFont.getWidthPoint(pageText, 11);
+            float rightX = document.right() - rightTextWidth - 20;
 
-            float prefixWidth = footerFont.getWidthPoint(pagePrefix, FOOTER_FONT_SIZE);
-            float totalWidthPlaceholder = footerFont.getWidthPoint("999", FOOTER_FONT_SIZE);
-            float rightX = document.right() - (prefixWidth + totalWidthPlaceholder);
-
-            canvas.saveState();
             canvas.beginText();
-            canvas.setFontAndSize(footerFont, FOOTER_FONT_SIZE);
-            canvas.showTextAligned(Element.ALIGN_LEFT, OWNER_TEXT, leftX, footerY, 0);
-            canvas.showTextAligned(Element.ALIGN_LEFT, pagePrefix, rightX, footerY, 0);
+            canvas.setFontAndSize(baseFont, 11);
+            canvas.showTextAligned(Element.ALIGN_LEFT, owner, leftX, y, 0);
+            canvas.showTextAligned(Element.ALIGN_LEFT, pageText, rightX, y, 0);
             canvas.endText();
-            canvas.addTemplate(totalPagesTemplate, rightX + prefixWidth, footerY);
-            canvas.restoreState();
+
+            canvas.addTemplate(totalPages, rightX + rightTextWidth, y);
         }
 
         @Override
         public void onCloseDocument(PdfWriter writer, Document document) {
-            int totalPageCount = writer.getPageNumber() - 1;
-
-            totalPagesTemplate.beginText();
-            totalPagesTemplate.setFontAndSize(footerFont, FOOTER_FONT_SIZE);
-            totalPagesTemplate.setTextMatrix(0, 0);
-            totalPagesTemplate.showText(String.valueOf(totalPageCount));
-            totalPagesTemplate.endText();
+            totalPages.beginText();
+            totalPages.setFontAndSize(baseFont, 11);
+            totalPages.showText(String.valueOf(writer.getPageNumber() - 1));
+            totalPages.endText();
         }
     }
 }
